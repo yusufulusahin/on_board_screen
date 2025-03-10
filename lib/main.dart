@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:on_board_screen/view/_autthanticate/onboard/view/onboard_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: Placeholder(),
+      home: OnboardView(),
     );
   }
 }
