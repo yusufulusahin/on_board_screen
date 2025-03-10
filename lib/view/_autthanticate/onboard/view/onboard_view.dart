@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:on_board_screen/core/base/view/base_view.dart';
 import 'package:on_board_screen/core/components/container/random_color_container.dart';
+import 'package:on_board_screen/core/constant/Svg/svg_path.dart';
 import 'package:on_board_screen/view/_autthanticate/onboard/viewmodel/onboard_viewmodel.dart';
 
 class OnboardView extends StatefulWidget {
@@ -19,7 +21,10 @@ class _OnboardViewState extends State<OnboardView> {
           (context, value) => Scaffold(
             body: Column(
               children: [
-                Expanded(flex: 6, child: RandomColorContainer()),
+                Expanded(
+                  flex: 6,
+                  child: SvgPicture.asset(SVGImagePaths.instance.first),
+                ),
                 Expanded(flex: 3, child: RandomColorContainer()),
                 Expanded(flex: 1, child: RandomColorContainer()),
               ],
