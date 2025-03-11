@@ -21,5 +21,19 @@ abstract class _OnboardViewModelBase with Store, BaseViewModel {
         SVGImagePaths.instance.first,
       ),
     );
+    onboardItems.add(
+      OnBoardModel(
+        "Önerilen Bakımlar ve Arıza Kodu Analizi!",
+        "Araç üreticisine özel bakım önerilerini görün ve arıza kodlarını analiz edin.",
+        SVGImagePaths.instance.second,
+      ),
+    );
+    onboardItems.add(
+      OnBoardModel(
+        "Hatırlatıcılar ve Servis Takibi!",
+        "Yağ değişimi, lastik bakımı ve daha fazlası için akıllı hatırlatıcılarla hiçbir bakımı kaçırmayın.",
+        SVGImagePaths.instance.third,
+      ),
+    );
   }
 }

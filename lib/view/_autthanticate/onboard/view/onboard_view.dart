@@ -2,8 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:on_board_screen/core/base/view/base_view.dart';
-import 'package:on_board_screen/core/components/container/random_color_container.dart';
-import 'package:on_board_screen/core/constant/Svg/svg_path.dart';
+import 'package:on_board_screen/view/_autthanticate/onboard/model/on_board_model.dart';
 import 'package:on_board_screen/view/_autthanticate/onboard/viewmodel/onboard_viewmodel.dart';
 
 class OnboardView extends StatefulWidget {
@@ -14,19 +13,34 @@ class OnboardView extends StatefulWidget {
 }
 
 class _OnboardViewState extends State<OnboardView> {
+  final PageController _pageController = PageController();
   @override
   Widget build(BuildContext context) {
     return BaseView<OnboardViewModel>(
+      onModelReady: (model) {
+        model.setContext(context);
+        model.init();
+      },
       viewModel: OnboardViewModel(),
       onBuilder:
-          (context, value) => Scaffold(
+          (context, OnboardViewModel viewModel) => Scaffold(
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
                   Spacer(flex: 1),
-                  Expanded(flex: 6, child: BuildSvgPicture()),
-                  BuildColumnText(context),
+                  Expanded(
+                    flex: 5,
+                    child: PageView.builder(
+                      controller: _pageController,
+                      itemCount: viewModel.onboardItems.length,
+                      itemBuilder:
+                          (context, index) => BuildColumnBody(
+                            context,
+                            viewModel.onboardItems[index],
+                          ),
+                    ),
+                  ),
                   Expanded(
                     flex: 2,
                     child: Row(
@@ -62,27 +76,32 @@ class _OnboardViewState extends State<OnboardView> {
     );
   }
 
-  Column BuildColumnText(BuildContext context) {
+  Column BuildColumnBody(BuildContext context, OnBoardModel model) {
+    return Column(
+      children: [
+        Expanded(flex: 6, child: BuildSvgPicture(model.imagePath)),
+        BuildColumnText(context, model),
+      ],
+    );
+  }
+
+  Column BuildColumnText(BuildContext context, OnBoardModel model) {
     return Column(
       children: [
         AutoSizeText(
           textAlign: TextAlign.center,
-          'Otomobilinizin Bakımını Kolaylaştırın!',
+          model.title,
           style: Theme.of(
             context,
           ).textTheme.displaySmall!.copyWith(fontWeight: FontWeight.bold),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 10.0),
-          child: AutoSizeText(
-            textAlign: TextAlign.center,
-            'Aracınızın bakım takvimini yönetin, hatırlatıcılar alın ve sorunsuz sürüşün keyfini çıkarın.',
-          ),
+          child: AutoSizeText(textAlign: TextAlign.center, model.description),
         ),
       ],
     );
   }
 
-  SvgPicture BuildSvgPicture() =>
-      SvgPicture.asset(SVGImagePaths.instance.first);
+  SvgPicture BuildSvgPicture(String path) => SvgPicture.asset(path);
 }
