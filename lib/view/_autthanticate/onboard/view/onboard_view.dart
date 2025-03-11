@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:on_board_screen/core/base/view/base_view.dart';
@@ -19,17 +20,69 @@ class _OnboardViewState extends State<OnboardView> {
       viewModel: OnboardViewModel(),
       onBuilder:
           (context, value) => Scaffold(
-            body: Column(
-              children: [
-                Expanded(
-                  flex: 6,
-                  child: SvgPicture.asset(SVGImagePaths.instance.first),
-                ),
-                Expanded(flex: 3, child: RandomColorContainer()),
-                Expanded(flex: 1, child: RandomColorContainer()),
-              ],
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  Spacer(flex: 1),
+                  Expanded(flex: 6, child: BuildSvgPicture()),
+                  BuildColumnText(context),
+                  Expanded(
+                    flex: 2,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: ListView.builder(
+                            itemCount: 3,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: EdgeInsets.all(10),
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.blue,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        FloatingActionButton(
+                          backgroundColor: Colors.green,
+                          child: Icon(Icons.arrow_right),
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
     );
   }
+
+  Column BuildColumnText(BuildContext context) {
+    return Column(
+      children: [
+        AutoSizeText(
+          textAlign: TextAlign.center,
+          'Otomobilinizin Bakımını Kolaylaştırın!',
+          style: Theme.of(
+            context,
+          ).textTheme.displaySmall!.copyWith(fontWeight: FontWeight.bold),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 10.0),
+          child: AutoSizeText(
+            textAlign: TextAlign.center,
+            'Aracınızın bakım takvimini yönetin, hatırlatıcılar alın ve sorunsuz sürüşün keyfini çıkarın.',
+          ),
+        ),
+      ],
+    );
+  }
+
+  SvgPicture BuildSvgPicture() =>
+      SvgPicture.asset(SVGImagePaths.instance.first);
 }
