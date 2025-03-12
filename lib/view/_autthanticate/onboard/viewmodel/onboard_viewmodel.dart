@@ -12,6 +12,14 @@ abstract class _OnboardViewModelBase with Store, BaseViewModel {
   void setContext(BuildContext context) => this.viewContext = context;
   List<OnBoardModel> onboardItems = [];
 
+  @observable
+  int currentindex = 0;
+
+  @action
+  void changeCurrentIndex(int value) {
+    currentindex = value;
+  }
+
   @override
   void init() {
     onboardItems.add(

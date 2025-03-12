@@ -33,6 +33,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter:
     sdk: flutter
+  flutter_mobx: ^2.3.0
   flutter_svg: any
   mobx: ^2.5.0
   mobx_codegen: ^2.3.0
