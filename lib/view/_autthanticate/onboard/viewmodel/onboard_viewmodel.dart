@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:on_board_screen/core/base/model/base_view_model.dart';
-import 'package:on_board_screen/core/constant/Svg/svg_path.dart';
+import 'package:on_board_screen/core/base/view/_product/_constant/Svg/svg_path.dart';
 import 'package:on_board_screen/view/_autthanticate/onboard/model/on_board_model.dart';
 part 'onboard_viewmodel.g.dart';
 

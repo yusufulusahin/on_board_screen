@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:on_board_screen/core/base/view/_product/_avatar/on_board_circle.dart';
 import 'package:on_board_screen/core/base/view/base_view.dart';
 import 'package:on_board_screen/view/_autthanticate/onboard/model/on_board_model.dart';
 import 'package:on_board_screen/view/_autthanticate/onboard/viewmodel/onboard_viewmodel.dart';
@@ -30,7 +31,7 @@ class _OnboardViewState extends State<OnboardView> {
               child: Column(
                 children: [
                   Spacer(flex: 1),
-                  Expanded(flex: 5, child: BuildPageView(viewModel)),
+                  Expanded(flex: 7, child: BuildPageView(viewModel)),
                   Expanded(flex: 2, child: BuildRowFooter(viewModel)),
                 ],
               ),
@@ -44,42 +45,57 @@ class _OnboardViewState extends State<OnboardView> {
       onPageChanged: (value) => viewModel.changeCurrentIndex(value),
       controller: _pageController,
       itemCount: viewModel.onboardItems.length,
-      itemBuilder:
-          (context, index) =>
-              BuildColumnBody(context, viewModel.onboardItems[index]),
+      itemBuilder: (context, index) => BodyColumCard(context, viewModel, index),
+    );
+  }
+
+  Padding BodyColumCard(
+    BuildContext context,
+    OnboardViewModel viewModel,
+    int index,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 211, 211, 211),
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        child: BuildColumnBody(context, viewModel.onboardItems[index]),
+      ),
     );
   }
 
   Row BuildRowFooter(OnboardViewModel viewModel) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Expanded(
-          flex: 2,
-          child: ListView.builder(
-            itemCount: 3,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: EdgeInsets.all(5),
-                child: Observer(
-                  builder: (_) {
-                    return CircleAvatar(
-                      radius: viewModel.currentindex == index ? 8 : 5,
-                      backgroundColor: Theme.of(
-                        context,
-                      ).primaryColor.withOpacity(
-                        viewModel.currentindex == index ? 1 : 0.2,
-                      ),
-                    );
-                  },
-                ),
-              );
-            },
+        Visibility(
+          child: FloatingActionButton(
+            backgroundColor: const Color.fromARGB(255, 211, 211, 211),
+            child: Icon(Icons.arrow_left),
+            onPressed: () {},
           ),
         ),
+        Spacer(), // Sol tarafta boşluk bırak
+        Row(
+          mainAxisSize: MainAxisSize.min, // Sadece içeriğe göre genişlik ayarla
+          children: List.generate(3, (index) {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5),
+              child: Observer(
+                builder: (_) {
+                  return OnBoardCircle(
+                    isSelected: viewModel.currentindex == index,
+                  );
+                },
+              ),
+            );
+          }),
+        ),
+        Spacer(), // Sağ tarafta boşluk bırak
         FloatingActionButton(
-          backgroundColor: Colors.green,
+          backgroundColor: const Color.fromARGB(255, 211, 211, 211),
           child: Icon(Icons.arrow_right),
           onPressed: () {},
         ),
@@ -107,7 +123,7 @@ class _OnboardViewState extends State<OnboardView> {
 
   Padding AutoSizeTextDescription(OnBoardModel model) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 40.0),
       child: AutoSizeText(textAlign: TextAlign.center, model.description),
     );
   }
