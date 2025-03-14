@@ -8,11 +8,18 @@ import 'package:on_board_screen/view/_autthanticate/onboard/view/onboard_view.da
 //biz bu işlerin initinin olması gerektiğini düşünüyoruz init/lang
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // EasyLocalization için gerekli
+  await EasyLocalization.ensureInitialized();
+
   runApp(
     EasyLocalization(
-      child: MyApp(),
       supportedLocales: LanguageManager.instance.supportedLocals,
       path: ApplicationConstants.LANG_ASSET_PATH,
+      fallbackLocale: const Locale(
+        "en",
+        "US",
+      ), // Eğer hata olursa kullanılacak dil
+      child: const MyApp(),
     ),
   );
 }

@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 //fakat çağrıldığı anda değer set olsun istediğimizden bunu kullanıyoruz.
 
 class LanguageManager {
-  // Lazy initialization için nullable yapıyoruz.
   static LanguageManager? _instance;
 
   static LanguageManager get instance {
@@ -18,9 +17,16 @@ class LanguageManager {
     return _instance!;
   }
 
-  LanguageManager._init();
+  late final Locale
+  _deviceLocale; // 'late' ile tanımlandıysa, hemen başlatılması lazım
 
-  final enLocale = Locale("en", "US");
+  LanguageManager._init() {
+    _deviceLocale = const Locale("en", "US"); // İlk değer ataması yapılıyor
+  }
+
+  final Locale enLocale = const Locale("en", "US");
 
   List<Locale> get supportedLocals => [enLocale];
+
+  Locale get deviceLocale => _deviceLocale;
 }
