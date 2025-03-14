@@ -1,8 +1,20 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:on_board_screen/core/base/constants/app_constants.dart';
+import 'package:on_board_screen/core/base/init/lang/language_manager.dart';
 import 'package:on_board_screen/view/_autthanticate/onboard/view/onboard_view.dart';
 
-void main() {
-  runApp(const MyApp());
+//supported local : uygulama hangi dilleri destekleyecek
+//biz bu işlerin initinin olması gerektiğini düşünüyoruz init/lang
+
+void main() async {
+  runApp(
+    EasyLocalization(
+      child: MyApp(),
+      supportedLocales: LanguageManager.instance.supportedLocals,
+      path: ApplicationConstants.LANG_ASSET_PATH,
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
