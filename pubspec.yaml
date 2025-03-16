@@ -38,6 +38,7 @@ dependencies:
   flutter_svg: any
   mobx: ^2.5.0
   mobx_codegen: ^2.3.0
+  provider: ^6.1.2
 
 dev_dependencies:
   flutter_lints: ^5.0.0

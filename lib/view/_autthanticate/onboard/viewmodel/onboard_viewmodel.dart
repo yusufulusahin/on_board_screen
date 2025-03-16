@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+import 'package:on_board_screen/core/base/constants/enum/app_theme_enum.dart';
+import 'package:on_board_screen/core/base/init/notifier/theme_notifier.dart';
 import 'package:on_board_screen/core/base/model/base_view_model.dart';
 import 'package:on_board_screen/core/base/view/_product/_constant/Svg/svg_path.dart';
 import 'package:on_board_screen/view/_autthanticate/onboard/model/on_board_model.dart';
+import 'package:provider/provider.dart';
 part 'onboard_viewmodel.g.dart';
 
 class OnboardViewModel = _OnboardViewModelBase with _$OnboardViewModel;
@@ -18,6 +21,13 @@ abstract class _OnboardViewModelBase with Store, BaseViewModel {
   @action
   void changeCurrentIndex(int value) {
     currentindex = value;
+  }
+
+  void changeTheme() {
+    Provider.of<ThemeNotifier>(
+      viewContext,
+      listen: false,
+    ).changeTheme(AppThemes.DARK);
   }
 
   @override
